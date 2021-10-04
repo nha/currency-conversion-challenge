@@ -3,12 +3,15 @@ import { styled } from '@mui/material'
 
 import Header from '@/header'
 import CurrencyConvert from '@/pages'
+import { ChosenCurrencyProvider } from '@/providers'
 
 const App: FC = () => {
   return (
     <Root>
       <Header />
-      <CurrencyConvert />
+      <ChosenCurrencyProvider>
+        <CurrencyConvert />
+      </ChosenCurrencyProvider>
     </Root>
   )
 }

@@ -1,81 +1,118 @@
-import React, { FC, useState, useMemo } from 'react'
-import { Alert, CardContent, Card, Grid, TextField, IconButton, Button, LinearProgress } from '@mui/material'
+import React, { FC, useContext } from 'react'
+import { Alert, CardContent, Card, Grid, IconButton, LinearProgress } from '@mui/material'
 import ReverseCurrencyIcon from '@mui/icons-material/CompareArrows'
 
-import { useFetchAllCurrencies } from '@/hooks'
-import { Currency } from '@/components/CurrencyOption'
-import VirtualizedAutocomplete from '@/components/VirtualizedAutoComplete'
+import { useCurrencySelections, useIsMobile } from '@/hooks'
+import { ChosenCurrency } from '@/providers'
+import { Currency } from '@/components/currency-dropdown/CurrencyOption'
+import CurrencySelectionDropdown from '@/components/currency-dropdown'
+import ConversionResult from '@/components/conversion-result'
+import AmountInput from '@/components/amount-input'
 
 const CurrencyConvert: FC = () => {
-  const { currencyMap, isLoading, error } = useFetchAllCurrencies()
-  const currencyOptions = useMemo<Currency[]>(
-    () => Object.entries(currencyMap).map(([key, value]) => ({ countryCode: key, currencyName: value })),
-    [currencyMap]
-  )
-  const [baseCurrency, setBaseCurrency] = useState<Currency | null>(null)
-  const [compareToCurrency, setCompareToCurrency] = useState<Currency | null>(null)
-
-  const handleUpdateCurrency = (newCurrency: Currency | null, isBaseCurrency: boolean) => {
-    isBaseCurrency ? setBaseCurrency(newCurrency) : setCompareToCurrency(newCurrency)
-  }
-
-  const handleSwapCurrencies = () => {
-    setBaseCurrency(currentBaseCurrency => {
-      setCompareToCurrency(currentBaseCurrency)
-      return compareToCurrency
-    })
-  }
+  const { baseCurrency, compareToCurrency, handleUpdateCurrency } = useContext(ChosenCurrency)
+  const {
+    fetchAllCurrenciesError,
+    compareCurrencyError,
+    isComparisonLoading,
+    isAllCurrenciesLoading,
+    amountBind,
+    currencyOptions,
+    currencySymbol,
+    exchangeRate,
+    amount,
+    lastUpdatedAt,
+    doesAmountPass
+  } = useCurrencySelections()
 
   return (
-    <Grid container xs={12} justifyContent='center'>
-      <Grid item xs={11}>
-        <h1>Currency Converter</h1>
-        <p>Check live foreign currency exchange rates</p>
-        <Card>
-          <CardContent>
-            {error ? <Alert severity='error'>Something went wrong. Please try again.</Alert> : null}
-            {isLoading ? <LinearProgress /> : null}
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={3}>
-                <TextField fullWidth label='Amount' />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <VirtualizedAutocomplete
-                  value={baseCurrency}
-                  options={currencyOptions}
-                  getOptionLabel={getOptionLabel}
-                  handleChange={newCurrency => handleUpdateCurrency(newCurrency, true)}
-                  label='From'
-                />
-              </Grid>
-              <Grid item xs={12} md={1} sx={{ display: 'flex' }} justifyContent='center' alignItems='center'>
-                <IconButton onClick={handleSwapCurrencies}>
-                  <ReverseCurrencyIcon />
-                </IconButton>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <VirtualizedAutocomplete
-                  value={compareToCurrency}
-                  options={currencyOptions}
-                  getOptionLabel={getOptionLabel}
-                  handleChange={newCurrency => handleUpdateCurrency(newCurrency, false)}
-                  label='To'
-                />
-              </Grid>
-              <Grid item xs={12} sx={{ display: 'flex' }} justifyContent='flex-end'>
-                <Button>Convert</Button>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
+    <Layout error={fetchAllCurrenciesError} isLoading={isAllCurrenciesLoading}>
+      <Grid container spacing={3}>
+        <AmountInput
+          amount={amount}
+          doesAmountPass={doesAmountPass}
+          amountBind={amountBind}
+          currencySymbol={currencySymbol}
+        />
+        <CurrencySelectionDropdown
+          value={baseCurrency}
+          options={currencyOptions}
+          getOptionLabel={getOptionLabel}
+          handleChange={newCurrency => handleUpdateCurrency(newCurrency, true)}
+          label='From'
+        />
+        <SwapCurrenciesButton />
+        <CurrencySelectionDropdown
+          value={compareToCurrency}
+          options={currencyOptions}
+          getOptionLabel={getOptionLabel}
+          handleChange={newCurrency => handleUpdateCurrency(newCurrency, false)}
+          label='To'
+        />
       </Grid>
+      <ConversionResult
+        isLoading={isComparisonLoading}
+        doesAmountPass={doesAmountPass}
+        amount={amount}
+        exchangeRate={exchangeRate}
+        lastUpdatedAt={lastUpdatedAt}
+        error={compareCurrencyError}
+      />
+    </Layout>
+  )
+}
+
+interface LayoutProps {
+  error: unknown
+  isLoading: boolean
+}
+const Layout: FC<LayoutProps> = ({ error, isLoading, children }) => (
+  <Grid container justifyContent='center'>
+    <Grid item xs={11}>
+      <h1>Currency Converter</h1>
+      <p>Check live foreign currency exchange rates</p>
+      <Card elevation={4}>
+        <CardContent>
+          {error ? (
+            <Alert sx={{ marginBottom: theme => theme.spacing(4) }} severity='error'>
+              Something went wrong. Please try again.
+            </Alert>
+          ) : null}
+          {isLoading ? <LinearProgress /> : children}
+        </CardContent>
+      </Card>
+    </Grid>
+  </Grid>
+)
+
+const SwapCurrenciesButton: FC = () => {
+  const isMobile = useIsMobile()
+  const { handleSwapCurrencies } = useContext(ChosenCurrency)
+  return (
+    <Grid item xs={12} md={1} sx={{ display: 'flex' }} justifyContent='center' alignItems='center'>
+      <IconButton size='small' onClick={handleSwapCurrencies}>
+        <ReverseCurrencyIcon sx={{ transform: `rotate(${isMobile ? '90deg' : '0'})` }} />
+      </IconButton>
     </Grid>
   )
 }
 
 const getOptionLabel = (option: Currency | null): string => {
   if (!option) return ''
-  return option.currencyName
+  // Since this cannot be influenced with CSS, it's transformed via JS
+  return `${option.currencyCode.toUpperCase()} ${option.currencyName}`
+}
+
+export const parseQueryString = () => {
+  const params = new URLSearchParams(window.location.search)
+  const compareToCurrencyId = params.get('to')
+  const baseCurrencyId = params.get('from')
+  const amount = params.get('amount')
+  return {
+    compareToCurrencyId,
+    baseCurrencyId,
+    amount
+  }
 }
 
 export default CurrencyConvert

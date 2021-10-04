@@ -10,4 +10,4 @@ export const client = axios.create({
  * @explanation If `currencyOne` is `eur` and `currencyTwo` is `jpy`, this will return the amount of `jpy` equal to one `eur`
  */
 export const generatePathUrlForCurrencyConversion = (currencyOne: string, currencyTwo: string): string =>
-  `currencies/${currencyOne}/${currencyTwo}.json`
+  `/currencies/${currencyOne}/${currencyTwo}.json`
