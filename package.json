@@ -14,13 +14,18 @@
     "@emotion/styled": "11.3.0",
     "@mui/icons-material": "^5.0.1",
     "@mui/material": "^5.0.1",
+    "axios": "^0.22.0",
+    "currency-flags": "^3.2.1",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.0",
+    "react-query": "^3.25.0",
+    "react-window": "^1.8.6"
   },
   "devDependencies": {
     "@types/node": "^14.14.31",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-window": "^1.8.5",
     "@vitejs/plugin-react-refresh": "^1.1.0",
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",

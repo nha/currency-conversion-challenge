@@ -1,6 +1,6 @@
-# React + TypeScript + MUI
+# Currency Conversion Challenge
 
-A Vite template for React, TypeScript and the latest major version of MUI.
+Currency converter
 
 ## Highlights
 
@@ -12,20 +12,18 @@ A Vite template for React, TypeScript and the latest major version of MUI.
 
 ## Demo
 
-<img src='./screen-shots/demo.png' />
+
 
 ## Getting Started
 
-- Clone the repo, `git clone https://github.com/christopher-caldwell/vite-material-ui.git`, or use the "Use this template" button at the top of this page.
+- Clone the repo
 - Install dependencies using `yarn`
 - Start the server with `yarn dev`
 
-## MUI
+All together:
 
-To learn more about the newest ways to use MUI, checkout [the docs](https://mui.com/getting-started/usage/).
-
-### What's Included
-
-- Custom theming
-- Using that theme from within a `styled` component.
-- Dark mode toggle with React Context
+```shell
+git clone https://github.com/christopher-caldwell/currency-conversion-challenge.git && \
+yarn && \
+yarn dev
+```
