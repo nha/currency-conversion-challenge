@@ -4,8 +4,8 @@ Currency converter heavily influenced by [XE Currency Converter](https://www.xe.
 
 ## Demo
 
-[Screenshots]()
-[Live Demo]()
+[Screenshots](./screen-shots/README.md)
+[Live Demo](https://d3jesfpl6tiycw.cloudfront.net/)
 
 ## Getting Started
 

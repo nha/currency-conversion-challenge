@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, Suspense } from 'react'
 import { styled } from '@mui/material'
 
 import { Header } from '@/components'
@@ -13,7 +13,9 @@ const App: FC = () => {
     <Root>
       <Header />
       <ChosenCurrencyProvider>
-        <CurrencyConvert />
+        <Suspense fallback={<span />}>
+          <CurrencyConvert />
+        </Suspense>
       </ChosenCurrencyProvider>
     </Root>
   )

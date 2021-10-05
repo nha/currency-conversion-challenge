@@ -1,13 +1,13 @@
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, lazy } from 'react'
 import { styled, Alert, CardContent, Card, Grid, IconButton, LinearProgress } from '@mui/material'
 import ReverseCurrencyIcon from '@mui/icons-material/CompareArrows'
 
 import { useCurrencySelections, useIsMobile } from '@/hooks'
 import { ChosenCurrency } from '@/providers'
 import { Currency } from '@/features/currency-dropdown/CurrencyOption'
-import CurrencySelectionDropdown from '@/features/currency-dropdown'
-import ConversionResult from '@/features/conversion-result'
-import AmountInput from '@/features/amount-input'
+const CurrencySelectionDropdown = lazy(() => import('@/features/currency-dropdown'))
+const ConversionResult = lazy(() => import('@/features/conversion-result'))
+const AmountInput = lazy(() => import('@/features/amount-input'))
 
 const CurrencyConvert: FC = () => {
   const { baseCurrency, compareToCurrency, handleUpdateCurrency } = useContext(ChosenCurrency)

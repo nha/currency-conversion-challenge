@@ -6,7 +6,8 @@
     "lint": "eslint --ext .ts,.tsx src",
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "deploy": ". .env.local && sh scripts/deploy.sh"
   },
   "dependencies": {
     "@caldwell619/react-hooks": "^0.0.7",
