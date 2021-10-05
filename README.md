@@ -38,6 +38,12 @@ When the dev server is running, it will constantly be running ESLint and the Typ
 
 These errors **cannot be dismissed**, as they are integral to the integrity of the app.
 
+### Bulletproof React
+
+This is my first attempt with [Bulletproof React](https://github.com/alan2207/bulletproof-react). I have a preference of project structure, but I have been interested in trying this out.
+
+There are some things I am not a fan of, such as all of the index.ts files that just re-export various things. I'm unsure if this is something that will continue, but it's good to try new things out.
+
 ### Quirks
 
 I have noticed some oddities when working on this.
