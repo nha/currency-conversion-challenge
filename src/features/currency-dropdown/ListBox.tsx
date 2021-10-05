@@ -1,13 +1,5 @@
-import React, {
-  useContext,
-  forwardRef,
-  useRef,
-  useEffect,
-  ForwardRefRenderFunction,
-  createContext,
-  ReactChild
-} from 'react'
-import { VariableSizeList } from 'react-window'
+import React, { useContext, forwardRef, ForwardRefRenderFunction, createContext, ReactChild } from 'react'
+import { FixedSizeList } from 'react-window'
 
 import { renderRow, LISTBOX_PADDING } from './renderRow'
 
@@ -26,24 +18,22 @@ const ListboxComponent: ForwardRefRenderFunction<HTMLDivElement, React.HTMLAttri
 
   const itemCount = itemData.length
   const getHeight = () => itemData.map(getChildSize).reduce((a, b) => a + b, 0)
-  const gridRef = useResetCache(itemCount)
 
   return (
     <div ref={ref}>
       <OuterElementContext.Provider value={other}>
-        <VariableSizeList
+        <FixedSizeList
           itemData={itemData}
           height={getHeight() + 2 * LISTBOX_PADDING}
           width='100%'
-          ref={gridRef}
           outerElementType={OuterElementType}
           innerElementType='ul'
-          itemSize={getChildSize}
-          overscanCount={5}
+          itemSize={itemSize}
+          overscanCount={2}
           itemCount={itemCount}
         >
           {renderRow}
-        </VariableSizeList>
+        </FixedSizeList>
       </OuterElementContext.Provider>
     </div>
   )
@@ -53,15 +43,5 @@ const OuterElementType = forwardRef<HTMLDivElement>((props, ref) => {
   const outerProps = useContext(OuterElementContext)
   return <div ref={ref} {...props} {...outerProps} />
 })
-
-const useResetCache = (data: unknown) => {
-  const ref = useRef<VariableSizeList>(null)
-  useEffect(() => {
-    if (ref.current != null) {
-      ref.current.resetAfterIndex(0, true)
-    }
-  }, [data])
-  return ref
-}
 
 export default ListboxComponent

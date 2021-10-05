@@ -22,7 +22,8 @@ const CurrencySelectionDropdown: FC<Props> = ({ options, value, getOptionLabel, 
             label={label}
           />
         )}
-        isOptionEqualToValue={({ currencyCode }) => currencyCode.toLowerCase() === value?.currencyCode.toLowerCase()}
+        // TODO: Optimize - takes too long to open menu because of this
+        isOptionEqualToValue={({ currencyCode }) => currencyCode.toLowerCase() === value?.currencyCode}
         fullWidth
         disablePortal
         getOptionLabel={getOptionLabel}
