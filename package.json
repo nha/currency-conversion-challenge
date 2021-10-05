@@ -1,6 +1,7 @@
 {
-  "name": "vite-ts-material-ui",
+  "name": "currency-conversion",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "format": "prettier --write src",
     "lint": "eslint --ext .ts,.tsx src",
