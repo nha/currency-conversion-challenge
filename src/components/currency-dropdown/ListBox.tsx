@@ -12,7 +12,10 @@ import { VariableSizeList } from 'react-window'
 import { renderRow, LISTBOX_PADDING } from './renderRow'
 
 const OuterElementContext = createContext({})
+const itemSize = 36
+const getChildSize = () => itemSize
 
+/** Most of this is from the [Mui docs](https://mui.com/components/autocomplete/#virtualization).  */
 const ListboxComponent: ForwardRefRenderFunction<HTMLDivElement, React.HTMLAttributes<HTMLElement>> = (props, ref) => {
   const { children, ...other } = props
   const itemData: ReactChild[] = []
@@ -22,17 +25,7 @@ const ListboxComponent: ForwardRefRenderFunction<HTMLDivElement, React.HTMLAttri
   })
 
   const itemCount = itemData.length
-  const itemSize = 36
-
-  const getChildSize = () => itemSize
-
-  const getHeight = () => {
-    if (itemCount > 8) {
-      return 8 * itemSize
-    }
-    return itemData.map(getChildSize).reduce((a, b) => a + b, 0)
-  }
-
+  const getHeight = () => itemData.map(getChildSize).reduce((a, b) => a + b, 0)
   const gridRef = useResetCache(itemCount)
 
   return (

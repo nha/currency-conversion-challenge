@@ -3,7 +3,8 @@ import { styled } from '@mui/material'
 
 import Header from '@/header'
 import CurrencyConvert from '@/pages'
-import { ChosenCurrencyProvider } from '@/providers'
+// import { ChosenCurrencyProvider } from '@/providers'
+import { ChosenCurrencyProvider } from '@/providers/experimental/ChosenCurrency'
 
 const App: FC = () => {
   return (

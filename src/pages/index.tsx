@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react'
-import { Alert, CardContent, Card, Grid, IconButton, LinearProgress } from '@mui/material'
+import { styled, Alert, CardContent, Card, Grid, IconButton, LinearProgress } from '@mui/material'
 import ReverseCurrencyIcon from '@mui/icons-material/CompareArrows'
 
 import { useCurrencySelections, useIsMobile } from '@/hooks'
@@ -11,6 +11,7 @@ import AmountInput from '@/components/amount-input'
 
 const CurrencyConvert: FC = () => {
   const { baseCurrency, compareToCurrency, handleUpdateCurrency } = useContext(ChosenCurrency)
+
   const {
     fetchAllCurrenciesError,
     compareCurrencyError,
@@ -69,8 +70,13 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = ({ error, isLoading, children }) => (
   <Grid container justifyContent='center'>
     <Grid item xs={11}>
-      <h1>Currency Converter</h1>
-      <p>Check live foreign currency exchange rates</p>
+      <LayoutTitle>Currency Converter</LayoutTitle>
+      <ApiCredit>
+        Powered by{' '}
+        <a href='https://github.com/fawazahmed0/currency-api' target='_blank' rel='noopener noreferrer'>
+          fawazahmed0's Currency API
+        </a>{' '}
+      </ApiCredit>
       <Card elevation={4}>
         <CardContent>
           {error ? (
@@ -85,12 +91,31 @@ const Layout: FC<LayoutProps> = ({ error, isLoading, children }) => (
   </Grid>
 )
 
+const LayoutTitle = styled('h1')`
+  margin: 0;
+`
+const ApiCredit = styled('p')`
+  margin: 0 0 ${({ theme }) => theme.spacing(4)} 0;
+`
+
 const SwapCurrenciesButton: FC = () => {
   const isMobile = useIsMobile()
   const { handleSwapCurrencies } = useContext(ChosenCurrency)
   return (
-    <Grid item xs={12} md={1} sx={{ display: 'flex' }} justifyContent='center' alignItems='center'>
-      <IconButton size='small' onClick={handleSwapCurrencies}>
+    <Grid
+      item
+      xs={12}
+      md={1}
+      sx={{
+        display: 'flex',
+        marginBottom: {
+          md: '20px'
+        }
+      }}
+      justifyContent='center'
+      alignItems='center'
+    >
+      <IconButton sx={{ padding: theme => ({ xs: '0', md: theme.spacing(1) }) }} onClick={handleSwapCurrencies}>
         <ReverseCurrencyIcon sx={{ transform: `rotate(${isMobile ? '90deg' : '0'})` }} />
       </IconButton>
     </Grid>

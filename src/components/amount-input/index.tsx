@@ -10,7 +10,7 @@ const AmountInput: FC<Props> = ({ amount, doesAmountPass, currencySymbol, amount
       <TextField
         // If the amount is empty, do not show error message
         error={amount ? !doesAmountPass : false}
-        helperText={amount && !doesAmountPass ? 'Must be numeric and less than 9 digits' : ' '}
+        helperText={amount && !doesAmountPass ? 'Must less than 9 digits' : ' '}
         InputProps={{
           type: 'tel',
           startAdornment: <InputAdornment position='start'>{currencySymbol}</InputAdornment>,

@@ -4,6 +4,7 @@ import format from 'date-fns/format'
 
 import { Currency } from '@/components/currency-dropdown/CurrencyOption'
 import { BrandColorText } from '@/components/shared'
+import { getMobileBreakpoint } from '@/hooks'
 
 const CurrencyLastUpdated: FC<Props> = ({
   baseCurrency,
@@ -19,20 +20,8 @@ const CurrencyLastUpdated: FC<Props> = ({
   }
 
   return (
-    <Grid
-      item
-      xs={12}
-      md={6}
-      justifyContent='space-between'
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: { xs: 'flex-start', md: 'flex-end' },
-        marginTop: theme => ({ xs: theme.spacing(3), md: '0' })
-      }}
-    >
-      <FormControlLabel
-        sx={{ marginBottom: theme => ({ xs: theme.spacing(4), md: theme.spacing(3) }) }}
+    <Container item xs={12} md={6}>
+      <AbbreviateFormLabel
         control={
           <Switch checked={areNumbersShortened} onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
         }
@@ -45,13 +34,32 @@ const CurrencyLastUpdated: FC<Props> = ({
       <Text>
         Last updated <BrandColorText>{formattedDate}</BrandColorText>
       </Text>
-    </Grid>
+    </Container>
   )
 }
 
 const Text = styled('p')`
   margin: 0;
   font-size: 0.85em;
+`
+
+const Container = styled(Grid)`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: ${({ theme }) => theme.spacing(3)};
+  ${getMobileBreakpoint} {
+    margin-top: 0;
+    align-items: flex-end;
+  }
+`
+
+const AbbreviateFormLabel = styled(FormControlLabel)`
+  margin-bottom: ${({ theme }) => theme.spacing(4)};
+  ${getMobileBreakpoint} {
+    margin-bottom: ${({ theme }) => theme.spacing(3)};
+  }
 `
 
 const formatString = 'MMMM do, yyyy hh:mm aaaa'

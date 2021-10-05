@@ -8,7 +8,7 @@ import { ChosenCurrency } from '@/providers'
 const amountRegex = new RegExp(/^[0-9]{1,9}$/)
 export const useCurrencySelections = () => {
   const { baseCurrency, compareToCurrency } = useContext(ChosenCurrency)
-  const [amount, amountBind, { doesPass }] = useInput('', undefined, amountRegex)
+  const [amount, amountBind, { doesPass }] = useInput(getPrevAmountFromUrl(), setAmountToUrl, amountRegex)
   const { currencyOptions, isLoading: isAllCurrenciesLoading, error: fetchAllCurrenciesError } = useFetchAllCurrencies()
 
   const {
@@ -32,4 +32,18 @@ export const useCurrencySelections = () => {
     lastUpdatedAt,
     currencySymbol
   }
+}
+
+const amountKey = 'amount'
+const setAmountToUrl = (amount: string) => {
+  const url = new URL(window.location.href)
+  const search = new URLSearchParams(url.search)
+  console.log('running', amount)
+  search.set(amountKey, amount)
+  window.history.replaceState({}, '', `${window.location.pathname}?${search.toString()}`)
+}
+const getPrevAmountFromUrl = (): string => {
+  const url = new URL(window.location.href)
+  const search = new URLSearchParams(url.search)
+  return search.get(amountKey) || ''
 }

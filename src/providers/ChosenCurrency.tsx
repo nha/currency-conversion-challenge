@@ -10,6 +10,7 @@ export const ChosenCurrencyProvider: FC = ({ children }) => {
     currencyCode: 'usd',
     currencyName: 'United States Dollar'
   })
+
   const [compareToCurrency, setCompareToCurrency] = useLocalStorage<Currency | null>('compareToCurrency', {
     currencyCode: 'eur',
     currencyName: 'Euro'
@@ -17,7 +18,6 @@ export const ChosenCurrencyProvider: FC = ({ children }) => {
 
   const handleUpdateCurrency = (newCurrency: Currency | null, isBaseCurrency: boolean) => {
     isBaseCurrency ? setBaseCurrency(newCurrency) : setCompareToCurrency(newCurrency)
-    // console.log('window.location.search', window.location.search)
   }
 
   const handleSwapCurrencies = () => {

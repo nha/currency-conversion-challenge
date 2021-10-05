@@ -18,7 +18,7 @@ const NumberFormatInputRender: React.ForwardRefRenderFunction<NumberFormat, Prop
       }}
       thousandSeparator
       isNumericString
-      // prefix='$'
+      type='tel'
     />
   )
 }
