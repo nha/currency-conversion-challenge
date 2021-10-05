@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 import capitalize from 'lodash.capitalize'
 
-import { Currency } from '@/components/currency-dropdown/CurrencyOption'
+import { Currency } from '@/features/currency-dropdown/CurrencyOption'
 import { client } from '@/client'
 import { CacheKeys } from './keys'
 
@@ -24,6 +24,7 @@ export const useFetchAllCurrencies = () => {
   }, [data])
 
   return {
+    currencyMap: data?.data || {},
     currencyOptions,
     ...allCurrenciesQueryResult
   }

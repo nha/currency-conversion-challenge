@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Grid, TextField, InputAdornment } from '@mui/material'
 import { UseInputBind } from '@caldwell619/react-hooks'
 
-import MaskedNumericInput from './MaskedInput'
+import { NumberFormatInput } from './MaskedInput'
 
 const AmountInput: FC<Props> = ({ amount, doesAmountPass, currencySymbol, amountBind }) => {
   return (
@@ -15,7 +15,7 @@ const AmountInput: FC<Props> = ({ amount, doesAmountPass, currencySymbol, amount
           type: 'tel',
           startAdornment: <InputAdornment position='start'>{currencySymbol}</InputAdornment>,
           //@ts-expect-error
-          inputComponent: MaskedNumericInput
+          inputComponent: NumberFormatInput
         }}
         {...amountBind}
         fullWidth

@@ -38,6 +38,24 @@ When the dev server is running, it will constantly be running ESLint and the Typ
 
 These errors **cannot be dismissed**, as they are integral to the integrity of the app.
 
+### Quirks
+
+I have noticed some oddities when working on this.
+
+- If you save the Provider file, the state is reset to the original. For example:
+
+```tsx title=ChosenCurrencyProvider.tsx
+const [baseCurrency, setBaseCurrency] = useState<Currency | null>(null)
+```
+
+If this `baseCurrency` has a value, and you save this file, `ChosenCurrencyProvider.tsx`, it will reset to `null`. Kind of annoying, but it only happens on this file ( or anything with state ).
+
+## Testing
+
+I have not done any tests :slightly_frowning_face:
+
+They take a considerable amount of time to do correctly, and it wasn't worth it for this.
+
 ## Runtime Libraries Used
 
 - [@mui/material](https://mui.com/getting-started/usage/) ( Material UI )
@@ -58,6 +76,12 @@ These errors **cannot be dismissed**, as they are integral to the integrity of t
 - [eslint](https://eslint.org/)
 - [typescript](https://www.typescriptlang.org/)
 
+## Styling
+
+Styling was done with [MUI v5](). There have been significant changes to this library, and overriding base styles has never been easier.
+
+Some benefits of using v5 have been documented on [their blog](https://mui.com/blog/mui-core-v5/).
+
 ## Amount to Convert
 
 Upon landing on the first and only view / page, you'll see 3 input boxes. From left to right, or top to bottom if on mobile, the amount to convert, the base currency to compare from, and the currency to convert into.
@@ -70,7 +94,7 @@ If you have chosen a base currency, that currency's symbol will be to the left o
 
 The other 2 inputs are Autocomplete Text fields that have all of the supported currencies. You can search by country code, or the name of the currency. You can also scroll through the list if you prefer.
 
-These values are persisted to local storage so that upon refresh, or when the user comes back to the app, they're still on the last chosen currency.
+These values are persisted to to the URL, meaning you can share a conversion with someone, and they will see the same conversion that you do. This also means your place is not lost should you refresh.
 
 In between the selectors is a button to swap the direction of conversion. This is an easy way to see how much the other currency converts to.
 
@@ -115,3 +139,12 @@ When this switch is engaged, the numbers will read shorter. For example, **1,240
 The switch is shown at the end of the red arrow in the image below.
 
 <img src='./screen-shots/abbreviate-switch.png' alt='' />
+
+## Extending Feature Set
+
+You can **_always_** add more features. If development of this were to continue, I might add the following:
+
+- [ ] Share button to easily send the conversion to someone through the [Web Share API](https://w3c.github.io/web-share/)
+- [ ] Chart showing the trend of the compared currency throughout a given time period
+- [ ] A list of common denominations in the given currency to show quick conversions. For example, 1x = 10y, 10x = 100y, etc.
+- [ ] If applicable, a common way to "guess" how much some currency is worth without using the tool. Such as when comparing Japanese Yen to USD, 100 JPY is close to 1 USD. So you can use that as a rough guide "When comparing Japanese Yen to USD, move the decimal place 2 to the left: 100 becomes 1.00 for USD"

@@ -4,10 +4,10 @@ import ReverseCurrencyIcon from '@mui/icons-material/CompareArrows'
 
 import { useCurrencySelections, useIsMobile } from '@/hooks'
 import { ChosenCurrency } from '@/providers'
-import { Currency } from '@/components/currency-dropdown/CurrencyOption'
-import CurrencySelectionDropdown from '@/components/currency-dropdown'
-import ConversionResult from '@/components/conversion-result'
-import AmountInput from '@/components/amount-input'
+import { Currency } from '@/features/currency-dropdown/CurrencyOption'
+import CurrencySelectionDropdown from '@/features/currency-dropdown'
+import ConversionResult from '@/features/conversion-result'
+import AmountInput from '@/features/amount-input'
 
 const CurrencyConvert: FC = () => {
   const { baseCurrency, compareToCurrency, handleUpdateCurrency } = useContext(ChosenCurrency)

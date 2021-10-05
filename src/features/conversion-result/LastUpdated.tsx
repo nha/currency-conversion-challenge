@@ -2,11 +2,11 @@ import React, { Dispatch, FC, SetStateAction } from 'react'
 import { Grid, styled, FormControlLabel, Switch } from '@mui/material'
 import format from 'date-fns/format'
 
-import { Currency } from '@/components/currency-dropdown/CurrencyOption'
-import { BrandColorText } from '@/components/shared'
+import { Currency } from '@/features/currency-dropdown/CurrencyOption'
+import { BrandColorText } from '@/components'
 import { getMobileBreakpoint } from '@/hooks'
 
-const CurrencyLastUpdated: FC<Props> = ({
+export const CurrencyLastUpdated: FC<Props> = ({
   baseCurrency,
   compareToCurrency,
   lastUpdatedAt,
@@ -81,5 +81,3 @@ const formatDate = (dateToFormat?: string): string => {
     return '-'
   }
 }
-
-export default CurrencyLastUpdated

@@ -1,14 +1,33 @@
-import React, { FC, createContext, Dispatch, SetStateAction, useState } from 'react'
+import React, { FC, createContext, Dispatch, SetStateAction, useState, useEffect } from 'react'
 
-import { Currency } from '@/components/currency-dropdown/CurrencyOption'
+import { Currency } from '@/features/currency-dropdown/CurrencyOption'
+import { useFetchAllCurrencies } from '@/hooks'
 
 export const ChosenCurrency = createContext<IChosenCurrency>({} as IChosenCurrency)
 
 /** This implementation uses the URL rather than local storage. I haven't decided which is better. */
 export const ChosenCurrencyProvider: FC = ({ children }) => {
-  const { urlBaseCurrency = null, urlCompareToCurrency = null } = getPrevCurrenciesFromUrl() || {}
-  const [baseCurrency, setBaseCurrency] = useState<Currency | null>(urlBaseCurrency)
-  const [compareToCurrency, setCompareToCurrency] = useState<Currency | null>(urlCompareToCurrency)
+  const { currencyMap } = useFetchAllCurrencies()
+  const [baseCurrency, setBaseCurrency] = useState<Currency | null>(null)
+  const [compareToCurrency, setCompareToCurrency] = useState<Currency | null>(null)
+
+  console.log({ baseCurrency, compareToCurrency })
+
+  useEffect(() => {
+    if (!currencyMap) return
+    const { urlBaseCurrency = null, urlCompareToCurrency = null } = getPrevCurrenciesFromUrl() || {}
+    if (!urlBaseCurrency || !urlCompareToCurrency) return
+    const validBaseCurrencyName = currencyMap[urlBaseCurrency?.currencyCode || ''] || null
+    const validCompareToCurrencyName = currencyMap[urlCompareToCurrency?.currencyCode || ''] || null
+
+    // If this condition fails, it means that the URL has been manually altered. Do nothing if it has been altered
+    if (!validBaseCurrencyName || !validCompareToCurrencyName) return
+    setBaseCurrency({ currencyCode: urlBaseCurrency.currencyCode, currencyName: validBaseCurrencyName })
+    setCompareToCurrency({
+      currencyCode: urlCompareToCurrency.currencyCode,
+      currencyName: validCompareToCurrencyName
+    })
+  }, [currencyMap])
 
   const handleUpdateCurrency = (newCurrency: Currency | null, isBaseCurrency: boolean) => {
     isBaseCurrency ? setBaseCurrency(newCurrency) : setCompareToCurrency(newCurrency)

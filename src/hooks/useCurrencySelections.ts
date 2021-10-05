@@ -38,7 +38,7 @@ const amountKey = 'amount'
 const setAmountToUrl = (amount: string) => {
   const url = new URL(window.location.href)
   const search = new URLSearchParams(url.search)
-  console.log('running', amount)
+
   search.set(amountKey, amount)
   window.history.replaceState({}, '', `${window.location.pathname}?${search.toString()}`)
 }

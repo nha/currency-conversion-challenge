@@ -3,7 +3,7 @@ import { AppBar, Toolbar } from '@mui/material'
 
 import DarkModeToggle from './DarkModeToggle'
 
-const Header: FC = () => {
+export const Header: FC = () => {
   return (
     <AppBar position='fixed'>
       <Toolbar variant='dense'>
@@ -12,5 +12,3 @@ const Header: FC = () => {
     </AppBar>
   )
 }
-
-export default Header

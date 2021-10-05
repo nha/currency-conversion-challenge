@@ -3,11 +3,11 @@ import { styled, Grid } from '@mui/material'
 import numeral from 'numeral'
 // import { useLocalStorage } from '@caldwell619/react-hooks'
 
-import { Currency } from '@/components/currency-dropdown/CurrencyOption'
-import CurrencyCode from '@/components/shared/CurrencyCode'
+import { Currency } from '@/features/currency-dropdown/CurrencyOption'
+import { CurrencyCode } from '@/components'
 import { useIsMobile } from '@/hooks'
 
-const ConversionDisplay: FC<Props> = ({
+export const ConversionDisplay: FC<Props> = ({
   amount,
   baseCurrency,
   compareToCurrency,
@@ -48,8 +48,9 @@ const ConversionDisplay: FC<Props> = ({
 
 const prettyPrintAmount = (amount: number, numberFormat: string): string => numeral(amount).format(numberFormat)
 
-const InputAmount = styled('h5')`
+const InputAmount = styled('h3')`
   margin: 0;
+  font-size: 1em;
 `
 const Result = styled('h2')`
   margin: 0 0 0 0;
@@ -70,5 +71,3 @@ interface Props {
 const BrandColorText = styled('span')`
   color: ${({ theme: { palette } }) => palette.primary.main};
 `
-
-export default ConversionDisplay

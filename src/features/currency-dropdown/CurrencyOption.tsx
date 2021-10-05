@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { styled, Grid } from '@mui/material'
 import isPropValid from '@emotion/is-prop-valid'
 
-import CurrencyCode from '@/components/shared/CurrencyCode'
+import { CurrencyCode } from '@/components'
 
 const CurrencyOption: FC<Currency> = ({ currencyCode, currencyName }) => {
   return (

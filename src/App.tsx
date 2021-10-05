@@ -1,9 +1,11 @@
 import React, { FC } from 'react'
 import { styled } from '@mui/material'
 
-import Header from '@/header'
+import { Header } from '@/components'
 import CurrencyConvert from '@/pages'
+// Local storage persist
 // import { ChosenCurrencyProvider } from '@/providers'
+// URL persist
 import { ChosenCurrencyProvider } from '@/providers/experimental/ChosenCurrency'
 
 const App: FC = () => {

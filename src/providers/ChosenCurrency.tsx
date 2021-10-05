@@ -1,7 +1,7 @@
 import React, { FC, createContext, Dispatch, SetStateAction } from 'react'
 import { useLocalStorage } from '@caldwell619/react-hooks'
 
-import { Currency } from '@/components/currency-dropdown/CurrencyOption'
+import { Currency } from '@/features/currency-dropdown/CurrencyOption'
 
 export const ChosenCurrency = createContext<IChosenCurrency>({} as IChosenCurrency)
 

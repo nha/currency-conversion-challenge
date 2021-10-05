@@ -1,7 +1,7 @@
 import React, { FC, forwardRef, HTMLAttributes } from 'react'
 import { styled, Popper, autocompleteClasses, TextField, Grid, Autocomplete } from '@mui/material'
 
-import { Currency, CountryFlag } from '@/components/currency-dropdown/CurrencyOption'
+import { Currency, CountryFlag } from '@/features/currency-dropdown/CurrencyOption'
 import ListboxComponent from './ListBox'
 
 const CurrencySelectionDropdown: FC<Props> = ({ options, value, getOptionLabel, handleChange, label }) => {

@@ -4,9 +4,9 @@ import { useLocalStorage } from '@caldwell619/react-hooks'
 
 import { ChosenCurrency } from '@/providers'
 import { useIsMobile } from '@/hooks'
-import { Currency } from '@/components/currency-dropdown/CurrencyOption'
-import ConversionDisplay from './Result'
-import LastUpdated from './LastUpdated'
+import { Currency } from '@/features/currency-dropdown/CurrencyOption'
+import { ConversionDisplay } from './Result'
+import { CurrencyLastUpdated } from './LastUpdated'
 
 const ConversionResult: FC<Props> = ({
   amount,
@@ -81,7 +81,7 @@ const DisplayResult: FC<DisplayResultProps> = ({ doesHaveError, ...restProps }) 
   return (
     <>
       <ConversionDisplay {...restProps} />
-      <LastUpdated {...restProps} />
+      <CurrencyLastUpdated {...restProps} />
     </>
   )
 }

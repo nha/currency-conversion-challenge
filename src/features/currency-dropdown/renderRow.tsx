@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography } from '@mui/material'
 import { ListChildComponentProps } from 'react-window'
 
-import CurrencyOption from '@/components/currency-dropdown/CurrencyOption'
+import CurrencyOption from './CurrencyOption'
 
 export const LISTBOX_PADDING = 8 // px
 /** Most of this is from the [Mui docs](https://mui.com/components/autocomplete/#virtualization).  */
