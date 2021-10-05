@@ -72,8 +72,6 @@ const getPrevCurrenciesFromUrl = (): UrlParseResult | undefined => {
   const fromName = search.get(SearchParams.FromName)
   const toName = search.get(SearchParams.ToName)
 
-  console.log({ from, to, fromName, toName })
-
   if (!from || !to || !fromName || !toName) return
   return {
     urlBaseCurrency: {

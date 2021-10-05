@@ -8,7 +8,15 @@ import { Currency } from '@/components/currency-dropdown/CurrencyOption'
 import ConversionDisplay from './Result'
 import LastUpdated from './LastUpdated'
 
-const ConversionResult: FC<Props> = ({ amount, exchangeRate, lastUpdatedAt, doesAmountPass, error, isLoading }) => {
+const ConversionResult: FC<Props> = ({
+  amount,
+  exchangeRate,
+  currencySymbol,
+  lastUpdatedAt,
+  doesAmountPass,
+  error,
+  isLoading
+}) => {
   const isMobile = useIsMobile()
   const { baseCurrency, compareToCurrency } = useContext(ChosenCurrency)
   // If the user is mobile, shorten by default
@@ -23,7 +31,8 @@ const ConversionResult: FC<Props> = ({ amount, exchangeRate, lastUpdatedAt, does
     exchangeRate,
     amount,
     baseCurrency,
-    compareToCurrency
+    compareToCurrency,
+    currencySymbol
   }
 
   return (
@@ -65,6 +74,7 @@ interface DisplayResultProps {
   amount: string
   baseCurrency: Currency | null
   compareToCurrency: Currency | null
+  currencySymbol: string
 }
 const DisplayResult: FC<DisplayResultProps> = ({ doesHaveError, ...restProps }) => {
   if (doesHaveError) return null
@@ -83,6 +93,7 @@ interface Props {
   doesAmountPass?: boolean
   error: unknown
   isLoading: boolean
+  currencySymbol: string
 }
 
 export default ConversionResult

@@ -12,7 +12,8 @@ const ConversionDisplay: FC<Props> = ({
   baseCurrency,
   compareToCurrency,
   exchangeRate = 0,
-  areNumbersShortened
+  areNumbersShortened,
+  currencySymbol
 }) => {
   const isMobile = useIsMobile()
   const numberFormat = areNumbersShortened ? '0.00a' : '0,0.00'
@@ -21,7 +22,7 @@ const ConversionDisplay: FC<Props> = ({
   const numericExchangeResult = numericAmount * exchangeRate
   const prettyPrintedExchangeResult = prettyPrintAmount(numericExchangeResult, numberFormat)
   const prettyPrintedExchangeRate = prettyPrintAmount(exchangeRate, numberFormat)
-  /** If the amount is more than 2, add an s to make `dollar` into `dollars` */
+  /** If the amount is more than 2, add an s to make `dollar` into `dollars`. Doesn't work with all currency, such as Bitcoin. */
   const pluralLettering = numericAmount >= 2 ? 's' : ''
   return (
     <Grid item xs={12} md={6}>
@@ -38,14 +39,13 @@ const ConversionDisplay: FC<Props> = ({
         </BrandColorText>
       </Result>
       <ExchangeRate>
-        1 <CurrencyCode currencyCode={compareToCurrency?.currencyCode} /> = {prettyPrintedExchangeRate}{' '}
-        <CurrencyCode currencyCode={baseCurrency?.currencyCode} />
+        1 <CurrencyCode currencyCode={compareToCurrency?.currencyCode} /> = {currencySymbol}
+        {prettyPrintedExchangeRate} <CurrencyCode currencyCode={baseCurrency?.currencyCode} />
       </ExchangeRate>
     </Grid>
   )
 }
 
-// const prettyPrintAmount = (amount: number): string => numeral(amount).format('0.00a')
 const prettyPrintAmount = (amount: number, numberFormat: string): string => numeral(amount).format(numberFormat)
 
 const InputAmount = styled('h5')`
@@ -64,6 +64,7 @@ interface Props {
   compareToCurrency: Currency | null
   exchangeRate?: number
   areNumbersShortened: boolean
+  currencySymbol: string
 }
 
 const BrandColorText = styled('span')`

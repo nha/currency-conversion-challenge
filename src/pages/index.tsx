@@ -58,6 +58,7 @@ const CurrencyConvert: FC = () => {
         exchangeRate={exchangeRate}
         lastUpdatedAt={lastUpdatedAt}
         error={compareCurrencyError}
+        currencySymbol={currencySymbol}
       />
     </Layout>
   )
