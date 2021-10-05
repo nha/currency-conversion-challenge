@@ -11,8 +11,6 @@ export const ChosenCurrencyProvider: FC = ({ children }) => {
   const [baseCurrency, setBaseCurrency] = useState<Currency | null>(null)
   const [compareToCurrency, setCompareToCurrency] = useState<Currency | null>(null)
 
-  console.log({ baseCurrency, compareToCurrency })
-
   useEffect(() => {
     if (!currencyMap) return
     const { urlBaseCurrency = null, urlCompareToCurrency = null } = getPrevCurrenciesFromUrl() || {}
