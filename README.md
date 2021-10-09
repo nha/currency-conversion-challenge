@@ -92,7 +92,7 @@ Some benefits of using v5 have been documented on [their blog](https://mui.com/b
 
 Upon landing on the first and only view / page, you'll see 3 input boxes. From left to right, or top to bottom if on mobile, the amount to convert, the base currency to compare from, and the currency to convert into.
 
-The amount input is limited to 9 characters for a validity check. You can input more than 9, but you will immediately see an error message explaining what is wrong. You **cannot** input letters here, as [react-number-format](https://www.npmjs.com/package/react-number-format) is providing an input mask to disallow the usage of non-numeric characters.
+The amount input is limited to 9 characters for a validity check. You can input more than 9, but you will immediately see an error message explaining what is wrong. You **cannot** input letters here, as [react-number-format](https://www.npmjs.com/package/react-number-format) is providing an input mask to disallow the usage of non-numeric characters. This was the preferred approach for me, because I couldn't find a library that formats the input, as well as lets letters be typed. So this does not "alert" the user when an invalid character is typed, but still does not allow them to be entered.
 
 If you have chosen a base currency, that currency's symbol will be to the left of your typeable input. This symbol is provided by [currency-symbol-map](https://www.npmjs.com/package/currency-symbol-map). If the symbol cannot be determined, the 3 character currency code will be used.
 
