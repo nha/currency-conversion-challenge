@@ -9,7 +9,7 @@ import { CacheKeys } from './keys'
 export const useFetchAllCurrencies = () => {
   const { data, ...allCurrenciesQueryResult } = useQuery(
     CacheKeys.AllCurrencies,
-    () => client.get<Record<string, string>>('/currencies.json'),
+    () => client.get<Record<string, string>>('/latest/currencies.json'),
     {
       staleTime: twentyFourHoursInMs
     }
@@ -40,4 +40,4 @@ const splitAndCapitalize = (currencyName: string): string => {
   return capitalizedWords.join(' ')
 }
 
-const twentyFourHoursInMs = 1000 * 60 * 60 * 24
+export const twentyFourHoursInMs = 1000 * 60 * 60 * 24

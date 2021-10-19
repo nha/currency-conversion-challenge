@@ -8,6 +8,7 @@ import { Currency } from '@/features/currency-dropdown/CurrencyOption'
 const CurrencySelectionDropdown = lazy(() => import('@/features/currency-dropdown'))
 const ConversionResult = lazy(() => import('@/features/conversion-result'))
 const AmountInput = lazy(() => import('@/features/amount-input'))
+const TrendChart = lazy(() => import('@/features/historical-chart'))
 
 const CurrencyConvert: FC = () => {
   const { baseCurrency, compareToCurrency, handleUpdateCurrency } = useContext(ChosenCurrency)
@@ -60,6 +61,8 @@ const CurrencyConvert: FC = () => {
         error={compareCurrencyError}
         currencySymbol={currencySymbol}
       />
+      <h2>Trend</h2>
+      <TrendChart currencyCodeOne={baseCurrency?.currencyCode} currencyCodeTwo={compareToCurrency?.currencyCode} />
     </Layout>
   )
 }

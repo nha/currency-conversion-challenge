@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "sh scripts/copy-vizzu-wasm.sh",
     "format": "prettier --write src",
     "lint": "eslint --ext .ts,.tsx src",
     "dev": "vite",
@@ -26,7 +27,8 @@
     "react-dom": "^17.0.0",
     "react-number-format": "^4.7.3",
     "react-query": "^3.25.0",
-    "react-window": "^1.8.6"
+    "react-window": "^1.8.6",
+    "vizzu": "^0.3.3"
   },
   "devDependencies": {
     "@types/lodash.capitalize": "^4.2.6",

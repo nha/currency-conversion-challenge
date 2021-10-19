@@ -4,5 +4,6 @@
  */
 export enum CacheKeys {
   AllCurrencies = 'all-currencies',
-  CompareCurrency = 'compare-currency'
+  CompareCurrency = 'compare-currency',
+  HistoricalTrend = 'historical-trend'
 }

@@ -28,7 +28,7 @@ export const useCompareCurrencies = (currencyCodeOne?: string, currencyCodeTwo?:
   return compareResult
 }
 
-type ConversionResult = {
+export type ConversionResult = {
   /** The date is was last updated
    * @format yyyy-mm-dd
    * */
