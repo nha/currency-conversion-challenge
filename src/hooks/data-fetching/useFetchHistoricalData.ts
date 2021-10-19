@@ -27,17 +27,14 @@ export const useFetchHistoricalTrends = (currencyCodeOne?: string, currencyCodeT
   const results = useQueries(queries) as UseQueryResult<HistoricalExchangeResult>[]
 
   const isLoading = !!results.find(({ isLoading }) => isLoading)
-  const lastUpdatedAts: string[] = []
-  const exchangeRates: number[] = []
+  const records: [string, number][] = []
   for (const response of results) {
     if (!response.data) continue
-    lastUpdatedAts.push(response.data.lastUpdatedAt)
-    exchangeRates.push(response.data.exchangeRate)
+    records.push([response.data.lastUpdatedAt, response.data.exchangeRate])
   }
 
   return {
-    lastUpdatedAts,
-    exchangeRates,
+    records,
     isLoading
   }
 }

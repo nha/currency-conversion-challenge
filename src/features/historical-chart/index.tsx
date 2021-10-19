@@ -19,10 +19,22 @@ const useChart = ({ currencyCodeOne, currencyCodeTwo }: Props) => {
   //@ts-ignore
   const chartConfig: AnimTarget = useMemo(
     () => ({
+      data: {
+        series: [
+          {
+            name: 'Record Date',
+            type: 'dimension'
+          },
+          {
+            name: 'Exchange Rates',
+            type: 'measure'
+          }
+        ]
+      },
       config: {
         channels: {
-          x: { set: ['$exists', 'Record Date'] },
-          y: { set: ['$exists', 'Exchange Rates'], range: { min: '95%', max: '105%' } }
+          x: { set: ['Record Date'] },
+          y: { set: ['Exchange Rates'] } // range: { min: '95%', max: '105%' }
         },
         geometry: 'line'
       },
@@ -47,32 +59,14 @@ const useChart = ({ currencyCodeOne, currencyCodeTwo }: Props) => {
     setChart(new Vizzu('myVizzu', chartConfig))
   }, [chart, chartConfig])
 
-  const { isLoading, lastUpdatedAts, exchangeRates } = useFetchHistoricalTrends(currencyCodeOne, currencyCodeTwo)
-
-  const data: AnimTarget['data'] = useMemo(
-    () => ({
-      series: [
-        {
-          name: 'Record Date',
-          type: 'dimension',
-          values: lastUpdatedAts
-        },
-        {
-          name: 'Exchange Rates',
-          type: 'measure',
-          values: exchangeRates
-        }
-      ]
-    }),
-    [exchangeRates, lastUpdatedAts]
-  )
-
+  const { isLoading, records } = useFetchHistoricalTrends(currencyCodeOne, currencyCodeTwo)
+  console.log('records', records)
   useEffect(() => {
     if (isLoading) return
     if (!chart) return
-    // This throws error "Error: error: Column name already exists: Record Date"
-    chart.animate({ data })
-  }, [isLoading, chart, data])
+    // @ts-ignore
+    chart.animate({ data: { records } })
+  }, [isLoading, chart, records])
 
   return {
     chartRef,
